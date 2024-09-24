@@ -30,7 +30,7 @@ jobs:
         uses: einaregilsson/beanstalk-deploy@v22
         with:
           application_name: carga-api
-          environment_name: carga-api-env
+          environment_name: Carga-api-env
           version_label: ${{ github.sha }}
           deployment_package: deploy.zip
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
