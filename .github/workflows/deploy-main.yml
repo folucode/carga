@@ -27,14 +27,14 @@ jobs:
         run: zip -r deploy.zip .
 
       - name: Deploy to Elastic Beanstalk
-        uses: einaregilsson/beanstalk-deploy@v19
+        uses: einaregilsson/beanstalk-deploy@v22
         with:
-          application_name: ${{ secrets.EB_APP_NAME }}
-          environment_name: ${{ secrets.EB_ENV_NAME }}
+          application_name: carga-api
+          environment_name: carga-api-env
           version_label: ${{ github.sha }}
           deployment_package: deploy.zip
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          region: ${{ secrets.AWS_REGION }}
+          region: eu-east-1
 
   
