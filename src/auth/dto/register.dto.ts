@@ -1,4 +1,11 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { Transform } from 'class-transformer';
+import {
+  IsBoolean,
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class RegisterDto {
   @IsNotEmpty()
@@ -16,4 +23,10 @@ export class RegisterDto {
   @IsString()
   @IsNotEmpty()
   password: string;
+
+  @IsBoolean()
+  @Transform(({ value }) => Boolean(value))
+  @IsNotEmpty()
+  @IsOptional()
+  isAuthor: boolean;
 }

@@ -7,6 +7,8 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/user/schemas/user.schema';
 import { RegisterDto } from './dto/register.dto';
 import { UserRepository } from 'src/user/repositories/user.repository';
+import { comparePassword, hashPassword } from 'src/utils/auth.util';
+import { UserDto } from 'src/user/dto/user.dto';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +18,7 @@ export class AuthService {
   ) {}
 
   async login(user: User, password: string): Promise<{ access_token: string }> {
-    if (user?.password !== password) {
+    if (!comparePassword(password, user.password)) {
       throw new UnauthorizedException();
     }
 
@@ -35,10 +37,15 @@ export class AuthService {
         `user with email: ${data.email} already exists`,
       );
 
-    const user: User = await this.userRepo.create(data);
+    const hashedPassed: string = await hashPassword(data.password);
+
+    const user: User = await this.userRepo.create({
+      ...data,
+      password: hashedPassed,
+    });
 
     return {
-      access_token: await this.jwtService.signAsync(user),
+      access_token: await this.jwtService.signAsync(new UserDto(user)),
     };
   }
 }

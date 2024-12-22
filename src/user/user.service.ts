@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { UserDto } from './dto/user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './schemas/user.schema';
 import { UserRepository } from './repositories/user.repository';
@@ -12,8 +12,8 @@ export class UserService {
     return 'This action adds a new user';
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async getProfile(user: User): Promise<UserDto> {
+    return new UserDto(await this.userRepo.findOne(user._id));
   }
 
   async findbyEmail(email: string): Promise<User> {

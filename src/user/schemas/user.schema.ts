@@ -19,6 +19,9 @@ export class User extends Document {
   @Prop()
   password: string;
 
+  @Prop({ default: false })
+  isAuthor: boolean
+
   @Prop({ default: Date.now })
   createAt: Date;
 
