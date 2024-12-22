@@ -1,9 +1,9 @@
-name: Deploy to Production
+name: Deploy to Staging
 
 on:
   push:
     branches:
-      - main
+      - staging
 
 jobs:
   build:
@@ -15,8 +15,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts'
-      
+            node-version: 18.14.2
+            
       - name: Install dependencies
         run: npm install
 
@@ -29,12 +29,11 @@ jobs:
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v19
         with:
-          application_name: ${{ secrets.EB_APP_NAME }}
-          environment_name: ${{ secrets.EB_ENV_NAME }}
+          application_name: ${{ secrets.EB_STAGING_APP_NAME }}
+          environment_name: ${{ secrets.EB_STAGING_ENV_NAME }}
           version_label: ${{ github.sha }}
           deployment_package: deploy.zip
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
           region: ${{ secrets.AWS_REGION }}
-
   
