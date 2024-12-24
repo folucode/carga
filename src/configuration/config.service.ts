@@ -8,7 +8,8 @@ export class ConfigHelperService {
     const envVar = process.env[name];
 
     if (!((envVar + '').length > 0)) {
-      throw new Error(`Env cvar ${name} cannot be empty`);
+      console.error(`Env var ${name} is missing`);
+      throw new Error(`Env var ${name} cannot be empty`);
     }
 
     return envVar as Type;

@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
-
 import { ApiRequest } from 'src/request.type';
 
 @Controller('user')
