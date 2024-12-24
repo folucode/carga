@@ -4,8 +4,10 @@ import { LoginDto } from './dto/login.dto';
 import { UserService } from 'src/user/user.service';
 import { User } from 'src/user/schemas/user.schema';
 import { RegisterDto } from './dto/register.dto';
+import { Public } from 'src/public.decorator';
 
 @Controller('auth')
+@Public()
 export class AuthController {
   constructor(
     private readonly authService: AuthService,

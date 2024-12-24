@@ -3,4 +3,8 @@ export declare type Config = {
   database: {
     mongoUrl: string;
   };
+  auth: {
+    secret: string;
+    expiresIn: number;
+  };
 };

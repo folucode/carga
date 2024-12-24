@@ -8,13 +8,14 @@ import { User } from 'src/user/schemas/user.schema';
 import { RegisterDto } from './dto/register.dto';
 import { UserRepository } from 'src/user/repositories/user.repository';
 import { comparePassword, hashPassword } from 'src/utils/auth.util';
-import { UserDto } from 'src/user/dto/user.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
     private readonly userRepo: UserRepository,
+    private readonly configService: ConfigService,
   ) {}
 
   async login(user: User, password: string): Promise<{ access_token: string }> {
@@ -25,7 +26,10 @@ export class AuthService {
     const payload = { sub: user._id, email: user.email };
 
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      access_token: await this.jwtService.signAsync(payload, {
+        secret: this.configService.get('auth.secret'),
+        expiresIn: this.configService.get('auth.expiresIn'),
+      }),
     };
   }
 
@@ -44,8 +48,16 @@ export class AuthService {
       password: hashedPassed,
     });
 
+    const payload = {
+      sub: user._id,
+      isLogggedIn: true,
+    };
+
     return {
-      access_token: await this.jwtService.signAsync(new UserDto(user)),
+      access_token: await this.jwtService.signAsync(payload, {
+        secret: this.configService.get('auth.secret'),
+        expiresIn: this.configService.get('auth.expiresIn'),
+      }),
     };
   }
 }
