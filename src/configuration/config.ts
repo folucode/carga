@@ -6,6 +6,10 @@ const configHelper: ConfigHelperService = new ConfigHelperService();
 export default (): Config => ({
   port: configHelper.getOSOptionalEnvVar('PORT', 3000),
   database: {
-    mongoUrl: configHelper.getOSEnvVar('MONGO_URL'),
+    mongoUrl: configHelper.getOSEnvVar<string>('MONGO_URL'),
+  },
+  auth: {
+    secret: configHelper.getOSEnvVar<string>('JWT_SECRET'),
+    expiresIn: configHelper.getOSEnvVar<number>('EXPIRES_IN')
   },
 });
