@@ -9,6 +9,7 @@ import { AuthGuard } from './auth/guards/auth.guard';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './configuration/config';
 import { ConfigurationModule } from './configuration/configuration.module';
+import { BookModule } from './book/book.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ConfigurationModule } from './configuration/configuration.module';
         uri: configService.get<string>('database.mongoUrl'),
       }),
     }),
+    BookModule,
   ],
   controllers: [AppController],
   providers: [
