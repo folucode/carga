@@ -44,6 +44,18 @@ export class BookService {
     });
   }
 
+  async findBook(id: string, user: User): Promise<Book> {
+    const book: Book = await this.bookRepo.findOne({
+      _id: id,
+      createdBy: user._id,
+    });
+
+    if (book.deleted)
+      throw new BadRequestException(`book with id: ${id} does not exist`);
+
+    return book;
+  }
+
   async findBookById(id: string): Promise<Book> {
     const book: Book = await this.bookRepo.findById(id);
 
@@ -101,7 +113,7 @@ export class BookService {
     );
   }
 
-  deleteBook(book: Book): Promise<void> {
+  deleteBook(book: Book): Promise<Book> {
     return this.bookRepo.softDelete(book._id);
   }
 }
