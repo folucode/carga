@@ -127,9 +127,9 @@ export abstract class MongoRepository<ModelClass> {
     }
   }
 
-  async softDelete(id: string): Promise<void> {
+  async softDelete(id: string): Promise<ModelClass> {
     try {
-      await this.modelClass.findByIdAndUpdate(id, { $set: { deleted: true } });
+      return this.modelClass.findByIdAndUpdate(id, { $set: { deleted: true } });
     } catch (error) {
       throw new Error(`Error soft deleting document: ${error.message}`);
     }

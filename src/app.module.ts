@@ -6,10 +6,13 @@ import { UserModule } from './user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/guards/auth.guard';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import configuration from './configuration/config';
 import { ConfigurationModule } from './configuration/configuration.module';
 import { BookModule } from './book/book.module';
+import { Config } from './configuration/config.type';
+
+const config: Config = configuration();
 
 @Module({
   imports: [
@@ -20,12 +23,7 @@ import { BookModule } from './book/book.module';
     ConfigurationModule,
     AuthModule,
     UserModule,
-    MongooseModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        uri: configService.get<string>('database.mongoUrl'),
-      }),
-    }),
+    MongooseModule.forRoot(config.database.mongoUrl),
     BookModule,
   ],
   controllers: [AppController],

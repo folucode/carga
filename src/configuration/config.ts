@@ -1,7 +1,10 @@
 import { ConfigHelperService } from './config.service';
 import { Config } from './config.type';
+import * as dotenv from 'dotenv';
 
 const configHelper: ConfigHelperService = new ConfigHelperService();
+
+dotenv.config({})
 
 export default (): Config => ({
   port: configHelper.getOSOptionalEnvVar('PORT', 3000),
