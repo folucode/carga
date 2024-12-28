@@ -13,13 +13,12 @@ export class CreateBookDto {
   title: string;
 
   @IsNotEmpty()
-  @IsString()
   @IsArray()
   @ApiProperty({
-    description: 'An array if book genre IDs',
+    description: 'An array of book genre IDs',
     type: [String],
     isArray: true,
     required: true,
   })
-  genres: Genre[];
+  genres: string[];
 }

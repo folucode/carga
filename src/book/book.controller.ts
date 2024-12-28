@@ -36,6 +36,8 @@ export class BookController {
     @Body() createBookDto: CreateBookDto,
     @Request() req: ApiRequest,
   ): Promise<Book> {
+    console.log({ createBookDto, u: req.user });
+
     return this.bookService.createBook(createBookDto, req.user);
   }
 
