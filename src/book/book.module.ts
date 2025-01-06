@@ -7,6 +7,7 @@ import { Genre, GenreSchema } from './schemas/genre.schema';
 import { BookEdition, BookEditionSchema } from './schemas/book-edition.schema';
 import { BookRepository } from './repositories/book.repository';
 import { BookEditionRepository } from './repositories/book-edition.schema';
+import { GenreService } from './genre.service';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { BookEditionRepository } from './repositories/book-edition.schema';
     ]),
   ],
   controllers: [BookController],
-  providers: [BookService, BookRepository, BookEditionRepository],
-  exports: [BookService, BookRepository, BookEditionRepository],
+  providers: [BookService, BookRepository, BookEditionRepository, GenreService],
+  exports: [BookService, BookRepository, BookEditionRepository, GenreService],
 })
 export class BookModule {}

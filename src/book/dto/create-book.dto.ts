@@ -1,6 +1,7 @@
 import { IsArray, IsNotEmpty, IsString } from 'class-validator';
-import { Genre } from '../schemas/genre.schema';
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
+import mongoose, { ObjectId } from 'mongoose';
 
 export class CreateBookDto {
   @IsString()
@@ -20,5 +21,6 @@ export class CreateBookDto {
     isArray: true,
     required: true,
   })
-  genres: string[];
+  @Transform(({ value }) => new mongoose.Schema.Types.ObjectId(value))
+  genres: ObjectId;
 }
