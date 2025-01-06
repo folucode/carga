@@ -41,7 +41,7 @@ export abstract class MongoRepository<ModelClass> {
   }
 
   async findMany(
-    filter: FilterQuery<ModelClass>,
+    filter: FilterQuery<ModelClass> = {},
     projection?: ProjectionType<ModelClass>,
     options?: QueryOptions<ModelClass>,
     limit = 10,
